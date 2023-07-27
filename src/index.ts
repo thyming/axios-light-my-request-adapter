@@ -130,9 +130,12 @@ export function createLightMyRequestAdapter(
       }
 
       try {
+        const serializer = utils.isFunction(config?.paramsSerializer) ? 
+          config.paramsSerializer :
+          config?.paramsSerializer?.serializer
         const params = buildParams(
           config.params,
-          config.paramsSerializer
+          serializer
         ).replace(/^\?/, "");
         if (parsed.search != null) {
           parsed.search += "&" + params;
